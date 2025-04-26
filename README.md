@@ -1,41 +1,41 @@
 
 
 # Clonar tu fork
-git clone https://github.com/olgbar/static-website.git
-cd static-website
+git clone https://github.com/olgbar/static-website.git  
+cd static-website  
 
 # Abrir para modificar HTML
-code .
+code .  
 
 # Commit inicial
-git add .
-git commit -m "Contenido personalizado del sitio web"
-git push origin master
+git add .  
+git commit -m "Contenido personalizado del sitio web"  
+git push origin master  
 
 # Iniciar Minikube
-minikube start -p 0311at
-minikube status -p 0311at
-minikube profile 0311at
+minikube start -p 0311at  
+minikube status -p 0311at  
+minikube profile 0311at  
 
 # Configurar Kubernetes
-kubectl create namespace k8s-web-dev
+kubectl create namespace k8s-web-dev  
 
 kubectl config set-context web-dev-context \
   --cluster=0311at \
   --user=0311at \
-  --namespace=k8s-web-dev
+  --namespace=k8s-web-dev  
 
-kubectl config use-context web-dev-context
-kubectl config get-contexts
+kubectl config use-context web-dev-context  
+kubectl config get-contexts  
 
 # Preparar manifiestos
-cd ..
-mkdir manifiestos-k8s
-cd manifiestos-k8s
-git init
+cd ..  
+mkdir manifiestos-k8s  
+cd manifiestos-k8s  
+git init  
 
 # Dejar esta terminal abierta y en otra montar el volumen como admin:
-minikube -p 0311at mount C:\Users\barbi\0311at\static-website:/mnt/static-website
+minikube -p 0311at mount C:\Users\barbi\0311at\static-website:/mnt/static-website  
 
 # Crear pv.yml
 ```yaml
@@ -71,7 +71,7 @@ kubectl apply -f pv.yml
 kubectl apply -f pvc.yml
 
 # Verificar
-kubectl get pv
+kubectl get pv  
 kubectl get pvc -n k8s-web-dev
 
 # Crear configmap.yml
@@ -89,8 +89,8 @@ data:
 kubectl apply -f configmap.yml
 
 # Verificar ConfigMap
-kubectl get configmap -n k8s-web-dev
-kubectl describe configmap sitio-config -n k8s-web-dev
+kubectl get configmap -n k8s-web-dev  
+kubectl describe configmap sitio-config -n k8s-web-dev  
 
 # Crear deployment.yml
 ``` yaml
@@ -132,7 +132,7 @@ spec:
         - name: sitio-volumen
           emptyDir: {}
 ```
-kubectl apply -f deployment.yml
+kubectl apply -f deployment.yml  
 
 # Crear service.yml
 ```yaml
@@ -154,16 +154,16 @@ spec:
 kubectl apply -f service.yml
 
 # Verificar
-kubectl describe service nginx-sitio -n k8s-web-dev
-kubectl get pods -n k8s-web-dev
+kubectl describe service nginx-sitio -n k8s-web-dev  
+kubectl get pods -n k8s-web-dev  
 
 # Ver dentro del pod (ajustá el nombre si cambia)
-POD_NAME=$(kubectl get pods -n k8s-web-dev -o jsonpath="{.items[0].metadata.name}")
-kubectl exec -it $POD_NAME -n k8s-web-dev -- ls /usr/share/nginx/html
-kubectl exec -it $POD_NAME -n k8s-web-dev -- printenv
+kubectl get pods -n k8s-web-dev  
+kubectl exec -it <nombre_del_pod> -n k8s-web-dev -- ls /usr/share/nginx/html  
+kubectl exec -it <nombre_del_pod> -n k8s-web-dev -- printenv  
 
 # Acceder al sitio
-minikube -p 0311at service nginx-sitio -n k8s-web-dev
+minikube -p 0311at service nginx-sitio -n k8s-web-dev  
 
 
 ### Bárbara Olguin - ITU Desarrollo de Software
