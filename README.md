@@ -35,7 +35,7 @@ cd manifiestos-k8s
 git init
 
 # Dejar esta terminal abierta y en otra montar el volumen como admin:
-# minikube -p 0311at mount C:\Users\barbi\0311at\static-website:/mnt/static-website
+minikube -p 0311at mount C:\Users\barbi\0311at\static-website:/mnt/static-website
 
 # Crear pv.yml
 cat <<EOF > pv.yml
