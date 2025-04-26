@@ -38,7 +38,7 @@ git init
 minikube -p 0311at mount C:\Users\barbi\0311at\static-website:/mnt/static-website
 
 # Crear pv.yml
-cat <<EOF > pv.yml
+```yaml
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -50,10 +50,11 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/mnt/static-website"
-EOF
+```
+
 
 # Crear pvc.yml
-cat <<EOF > pvc.yml
+```yml
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -64,8 +65,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-EOF
-
+```
 # Aplicar PV y PVC
 kubectl apply -f pv.yml
 kubectl apply -f pvc.yml
@@ -75,7 +75,7 @@ kubectl get pv
 kubectl get pvc -n k8s-web-dev
 
 # Crear configmap.yml
-cat <<EOF > configmap.yml
+```yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -84,8 +84,7 @@ metadata:
 data:
   MENSAJE: "¡Bienvenida al sitio !"
   VERSION: "1.0.0"
-
-EOF
+```
 
 kubectl apply -f configmap.yml
 
@@ -94,7 +93,7 @@ kubectl get configmap -n k8s-web-dev
 kubectl describe configmap sitio-config -n k8s-web-dev
 
 # Crear deployment.yml
-cat <<EOF > deployment.yml
+``` yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -132,12 +131,11 @@ spec:
       volumes:
         - name: sitio-volumen
           emptyDir: {}
-
-EOF
-
+```
 kubectl apply -f deployment.yml
 
 # Crear service.yml
+```yaml
 cat <<EOF > service.yml
 apiVersion: v1
 kind: Service
@@ -151,7 +149,7 @@ spec:
       port: 80
       targetPort: 80
   type: NodePort
-EOF
+```
 
 kubectl apply -f service.yml
 
