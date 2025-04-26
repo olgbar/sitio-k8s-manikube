@@ -1,6 +1,6 @@
 
 
-# Clonar tu fork
+# Clonar el fork
 git clone https://github.com/olgbar/static-website.git  
 cd static-website  
 
