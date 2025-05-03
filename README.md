@@ -102,8 +102,8 @@ Los archivos del sitio se clonan directamente dentro del pod debido al uso de un
 ## Preparar el Entorno  
 
 1. Clonar el repositorio:  
-  git clone https://github.com/tu-usuario/k8s-static-website-deploy.git  
-  cd k8s-static-website-deploy  
+  git clone https://github.com/olgbar/sitio-k8s-manikube.git
+  cd sitio-k8s-manikube 
   
 2. Otorgar permisos de ejecución al script:
    chmod +x deploy-website.sh
